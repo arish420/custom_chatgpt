@@ -53,7 +53,7 @@ import os
 os.environ["OPENAI_API_KEY"] = k
 llm = ChatOpenAI(model="gpt-4o-mini")
 # st.write(download_db())
-json_data=df.to_json(orient='records')
+json_data=df.to_json(orient='records', indent=4)
 
 from langchain_text_splitters import RecursiveJsonSplitter
 
