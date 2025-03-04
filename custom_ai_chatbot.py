@@ -32,14 +32,6 @@ df=pd.read_excel("sample data.xlsx")
 
 from langchain_experimental.agents import create_pandas_dataframe_agent
 
-# agent = create_pandas_dataframe_agent(
-#     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
-# )
-# agent.invoke(
-#     {
-#         "input": "What's the correlation between age and fare? is that greater than the correlation between fare and survival?"
-#     }
-# )
 # https://drive.google.com/file/d/1ug8pf1M1tes-CJMhS_sso372tvC4RQv8/view?usp=sharing
 
 file_id = "1ug8pf1M1tes-CJMhS_sso372tvC4RQv8"
@@ -61,6 +53,31 @@ import os
 os.environ["OPENAI_API_KEY"] = k
 llm = ChatOpenAI(model="gpt-4o-mini")
 st.write(download_db())
+
+
+
+
+agent = create_pandas_dataframe_agent(
+    llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+)
+
+query=st.text_input("Your Query Here")
+
+
+
+if st.button("submit"):
+
+    st.write(agent.invoke({"input": query}))
+
+
+
+
+
+
+
+
+
+
 
 # ###############################################################################################
 # files=os.listdir()
