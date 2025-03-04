@@ -51,7 +51,9 @@ def download_db():
     url = f"https://drive.google.com/uc?id={file_id}"
     gdown.download(url, output_file, quiet=False)
     return output_file
-
+with open(download_db(),'r') as f:
+    f=f.read()
+    st.write(f)
 st.write(download_db())
 
 # ###############################################################################################
