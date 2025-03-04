@@ -56,6 +56,14 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 json_data=df.to_json(orient='records', indent=4)
 
 from langchain_experimental.agents.agent_toolkits import create_csv_agent
+# To query a single csv files
+agent = create_csv_agent(
+    ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613"),
+    "sample data.csv",
+    verbose=True,
+    agent_type=AgentType.OPENAI_FUNCTIONS,
+)
+
 
 
 
@@ -161,9 +169,9 @@ from langchain_experimental.agents.agent_toolkits import create_csv_agent
 
 
 
-agent = create_pandas_dataframe_agent(
-    llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
-)
+# agent = create_pandas_dataframe_agent(
+#     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+# )
 
 st.header("Welcome to Custom AI ChatBot")
 
