@@ -201,7 +201,7 @@ if st.button("submit"):
 
     # st.write(agent.invoke({"input": query}))
     # query = "Who won the Six Nations in 2020?"
-    answer = rag_chain.run(query)
+    answer = rag_chain.invoke(query)
     st.write(answer)
 
 
