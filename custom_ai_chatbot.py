@@ -26,6 +26,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.docstore.document import Document
 from datetime import datetime
 import gdown
+import openai
 
 df=pd.read_excel("sample data.xlsx")
 
@@ -54,13 +55,32 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 # st.write(download_db())
 
 
+import openai
+import tiktoken
+
+# Combine relevant columns into a single text format
+df["content"] = df.apply(lambda row: " ".join(map(str, row)), axis=1)
+
+# Generate embeddings
+def get_embedding(text):
+    response = openai.Embedding.create(
+        model="text-embedding-ada-002",
+        input=text
+    )
+    return response["data"][0]["embedding"]
+
+# Apply embedding function
+df["embedding"] = df["content"].apply(get_embedding)
+
+# Convert to dictionary format
+data_records = df[["content", "embedding"]].to_dict(orient="records")
 
 
-agent = create_pandas_dataframe_agent(
-    llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
-)
+# agent = create_pandas_dataframe_agent(
+#     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+# )
 
-st.header("Welcome to Custom AI ChatBot")
+# st.header("Welcome to Custom AI ChatBot")
 
 query=st.text_input("Your Query Here")
 
@@ -68,7 +88,7 @@ query=st.text_input("Your Query Here")
 
 if st.button("submit"):
 
-    st.write(agent.invoke({"input": query}))
+    # st.write(agent.invoke({"input": query}))
 
 
 
