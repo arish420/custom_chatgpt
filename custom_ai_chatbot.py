@@ -28,6 +28,32 @@ from datetime import datetime
 
 st.write("Hi")
 
+df=pd.read_excel("sample_data.xlsx")
+
+from langchain_experimental.agents import create_pandas_dataframe_agent
+
+# agent = create_pandas_dataframe_agent(
+#     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+# )
+# agent.invoke(
+#     {
+#         "input": "What's the correlation between age and fare? is that greater than the correlation between fare and survival?"
+#     }
+# )
+# https://drive.google.com/file/d/1ug8pf1M1tes-CJMhS_sso372tvC4RQv8/view?usp=sharing
+
+file_id = "1ug8pf1M1tes-CJMhS_sso372tvC4RQv8"
+output_file = "open_ai_key.txt"
+
+# Download the file
+@st.cache_data
+def download_db():
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, output_file, quiet=False)
+    return output_file
+
+st.write(download_db())
+
 # ###############################################################################################
 # files=os.listdir()
 # ###############################################################################################
