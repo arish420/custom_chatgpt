@@ -20,3 +20,4 @@ langchainhub
 langchain-huggingface
 gdown
 langchain-experimental
+tabulate
