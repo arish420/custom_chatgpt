@@ -199,10 +199,10 @@ if st.button("submit"):
     # st.write(answer)
 
 
-    st.write(agent.invoke({"input": query}))
+    # st.write(agent.invoke({"input": query}))
     # query = "Who won the Six Nations in 2020?"
-    # answer = rag_chain.invoke(query)
-    # st.write(answer)
+    answer = rag_chain.invoke(query)
+    st.write(answer)
 
 
 
