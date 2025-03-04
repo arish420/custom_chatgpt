@@ -1,5 +1,5 @@
 import streamlit as st
-
+import pandas as pd
 import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.document_loaders import PyPDFDirectoryLoader
