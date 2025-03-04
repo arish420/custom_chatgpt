@@ -55,20 +55,24 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 # st.write(download_db())
 json_data=df.to_json(orient='records', indent=4)
 
-from langchain_experimental.agents.agent_toolkits import create_csv_agent
-# To query a single csv files
-agent = create_csv_agent(
-    ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613"),
-    "sample data.csv",
-    verbose=True,
-    agent_type=AgentType.OPENAI_FUNCTIONS,
-)
 
 
 
+from langchain_community.document_loaders import UnstructuredExcelLoader
 
+loader = UnstructuredExcelLoader("sample data.xlsx", mode="elements")
+docs = loader.load()
 
+from langchain.chains import RetrievalQA
+from langchain.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
 
+# Assuming you have OpenAI API key set up in your environment
+embeddings = OpenAIEmbeddings()
+vectorstore = FAISS.from_documents(docs, embeddings)
+retriever = vectorstore.as_retriever()
+
+qa_chain = RetrievalQA(retriever=retriever)
 
 
 
@@ -184,7 +188,10 @@ if st.button("submit"):
     # st.write(answer)
 
 
-    st.write(agent.invoke({"input": query}))
+    # st.write(agent.invoke({"input": query}))
+    # query = "Who won the Six Nations in 2020?"
+    answer = qa_chain.run(query)
+    st.write(answer)
 
 
 
