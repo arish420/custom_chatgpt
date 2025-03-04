@@ -184,9 +184,9 @@ rag_chain = (
 
 
 
-# agent = create_pandas_dataframe_agent(
-#     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
-# )
+agent = create_pandas_dataframe_agent(
+    llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+)
 
 st.header("Welcome to Custom AI ChatBot")
 
@@ -199,10 +199,10 @@ if st.button("submit"):
     # st.write(answer)
 
 
-    # st.write(agent.invoke({"input": query}))
+    st.write(agent.invoke({"input": query}))
     # query = "Who won the Six Nations in 2020?"
-    answer = rag_chain.invoke(query)
-    st.write(answer)
+    # answer = rag_chain.invoke(query)
+    # st.write(answer)
 
 
 
