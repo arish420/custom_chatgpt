@@ -51,9 +51,15 @@ def download_db():
     url = f"https://drive.google.com/uc?id={file_id}"
     gdown.download(url, output_file, quiet=False)
     return output_file
+k=""
 with open(download_db(),'r') as f:
     f=f.read()
-    st.write(f)
+    # st.write(f)
+    k=f
+    
+import os
+os.environ["OPENAI_API_KEY"] = k
+llm = ChatOpenAI(model="gpt-4o-mini")
 st.write(download_db())
 
 # ###############################################################################################
