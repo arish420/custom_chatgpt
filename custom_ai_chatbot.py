@@ -50,7 +50,7 @@ with open(download_db(),'r') as f:
     
 import os
 os.environ["OPENAI_API_KEY"] = k
-llm = ChatOpenAI(model="gpt-4o")
+llm = ChatOpenAI(model="gpt-4o mini")
 # st.write(download_db())
 
 
