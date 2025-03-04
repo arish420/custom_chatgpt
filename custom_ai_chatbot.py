@@ -52,7 +52,7 @@ with open(download_db(),'r') as f:
 import os
 os.environ["OPENAI_API_KEY"] = k
 llm = ChatOpenAI(model="gpt-4o-mini")
-st.write(download_db())
+# st.write(download_db())
 
 
 
@@ -60,6 +60,8 @@ st.write(download_db())
 agent = create_pandas_dataframe_agent(
     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
 )
+
+st.header("Welcome to Custom AI ChatBot")
 
 query=st.text_input("Your Query Here")
 
