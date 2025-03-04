@@ -72,8 +72,19 @@ embeddings = OpenAIEmbeddings()
 vectorstore = FAISS.from_documents(docs, embeddings)
 retriever = vectorstore.as_retriever()
 
-qa_chain = RetrievalQA(retriever=retriever)
+prompt = hub.pull("rlm/rag-prompt")
 
+
+def format_docs(docs):
+    return "\n\n".join(doc.page_content for doc in docs)
+
+
+rag_chain = (
+    {"context": retriever | format_docs, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
 
 
 
@@ -190,7 +201,7 @@ if st.button("submit"):
 
     # st.write(agent.invoke({"input": query}))
     # query = "Who won the Six Nations in 2020?"
-    answer = qa_chain.run(query)
+    answer = rag_chain.run(query)
     st.write(answer)
 
 
