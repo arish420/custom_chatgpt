@@ -28,7 +28,7 @@ from datetime import datetime
 
 st.write("Hi")
 
-df=pd.read_excel("sample_data.xlsx")
+df=pd.read_excel("sample data.xlsx")
 
 from langchain_experimental.agents import create_pandas_dataframe_agent
 
