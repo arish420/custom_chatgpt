@@ -53,6 +53,64 @@ import os
 os.environ["OPENAI_API_KEY"] = k
 llm = ChatOpenAI(model="gpt-4o-mini")
 # st.write(download_db())
+json_data=df.to_json(orient='records')
+# Recursively split json data - If you need to access/manipulate the smaller json chunks
+json_chunks = splitter.split_json(json_data=json_data)
+
+for chunk in json_chunks[:3]:
+    st.write(chunk)
+
+from langchain_text_splitters import RecursiveJsonSplitter
+
+splitter = RecursiveJsonSplitter(max_chunk_size=300)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # import openai
