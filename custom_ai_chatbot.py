@@ -55,13 +55,7 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 # st.write(download_db())
 json_data=df.to_json(orient='records', indent=4)
 
-from langchain_community.document_loaders import UnstructuredExcelLoader
-
-loader = UnstructuredExcelLoader("sample data.xlsx", mode="elements")
-docs = loader.load()
-
-
-
+from langchain_experimental.agents.agent_toolkits import create_csv_agent
 
 
 
