@@ -19,3 +19,4 @@ faiss-cpu
 langchainhub
 langchain-huggingface
 gdown
+langchain-experimental
