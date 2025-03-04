@@ -55,70 +55,70 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 # st.write(download_db())
 
 
-import openai
-import numpy as np
+# import openai
+# import numpy as np
 
-# Combine columns into a single text field
-df["content"] = df.apply(lambda row: " ".join(map(str, row)), axis=1)
-
-
-
-
-
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.docstore.document import Document
-
-
-# Initialize OpenAI embedding model
-embedding_model = OpenAIEmbeddings(model="text-embedding-ada-002")
-
-# Convert DataFrame into LangChain Documents
-documents = [Document(page_content=text) for text in df["content"].tolist()]
-
-# Create FAISS vector store
-vectorstore = FAISS.from_documents(documents, embedding_model)
-
-# Save FAISS index
-vectorstore.save_local("faiss_index")
-
-
-from langchain.chat_models import ChatOpenAI
-from langchain.chains import RetrievalQA
-
-# Initialize OpenAI Chat model
-chat_model = ChatOpenAI(model_name="gpt-4o", temperature=0)
-
-# Create Retrieval-QA Chain
-qa_chain = RetrievalQA.from_chain_type(
-    llm=chat_model,
-    chain_type="stuff",
-    retriever=vectorstore.as_retriever()
-)
-
-# Function to generate response
-def generate_response(query):
-    return qa_chain.run(query)
-
-# Example Usage
-# query = "What is the average monthly sales?"
-
-# print("AI Response:", answer)
+# # Combine columns into a single text field
+# df["content"] = df.apply(lambda row: " ".join(map(str, row)), axis=1)
 
 
 
 
 
+# from langchain.embeddings.openai import OpenAIEmbeddings
+# from langchain.vectorstores import FAISS
+# from langchain.docstore.document import Document
 
 
+# # Initialize OpenAI embedding model
+# embedding_model = OpenAIEmbeddings(model="text-embedding-ada-002")
+
+# # Convert DataFrame into LangChain Documents
+# documents = [Document(page_content=text) for text in df["content"].tolist()]
+
+# # Create FAISS vector store
+# vectorstore = FAISS.from_documents(documents, embedding_model)
+
+# # Save FAISS index
+# vectorstore.save_local("faiss_index")
 
 
+# from langchain.chat_models import ChatOpenAI
+# from langchain.chains import RetrievalQA
 
+# # Initialize OpenAI Chat model
+# chat_model = ChatOpenAI(model_name="gpt-4o", temperature=0)
 
-
-# agent = create_pandas_dataframe_agent(
-#     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+# # Create Retrieval-QA Chain
+# qa_chain = RetrievalQA.from_chain_type(
+#     llm=chat_model,
+#     chain_type="stuff",
+#     retriever=vectorstore.as_retriever()
 # )
+
+# # Function to generate response
+# def generate_response(query):
+#     return qa_chain.run(query)
+
+# # Example Usage
+# # query = "What is the average monthly sales?"
+
+# # print("AI Response:", answer)
+
+
+
+
+
+
+
+
+
+
+
+
+agent = create_pandas_dataframe_agent(
+    llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
+)
 
 # st.header("Welcome to Custom AI ChatBot")
 
@@ -127,11 +127,11 @@ query=st.text_input("Your Query Here")
 
 
 if st.button("submit"):
-    answer = generate_response(query)
-    st.write(answer)
+    # answer = generate_response(query)
+    # st.write(answer)
 
 
-    # st.write(agent.invoke({"input": query}))
+    st.write(agent.invoke({"input": query}))
 
 
 
