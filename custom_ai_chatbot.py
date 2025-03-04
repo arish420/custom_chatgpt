@@ -26,7 +26,6 @@ from langchain_community.vectorstores import FAISS
 from langchain.docstore.document import Document
 from datetime import datetime
 import gdown
-st.write("Hi")
 
 df=pd.read_excel("sample data.xlsx")
 
@@ -51,7 +50,7 @@ with open(download_db(),'r') as f:
     
 import os
 os.environ["OPENAI_API_KEY"] = k
-llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatOpenAI(model="gpt-4o")
 # st.write(download_db())
 
 
