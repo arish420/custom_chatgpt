@@ -25,7 +25,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.docstore.document import Document
 from datetime import datetime
-
+import gdown
 st.write("Hi")
 
 df=pd.read_excel("sample data.xlsx")
