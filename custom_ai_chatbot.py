@@ -61,7 +61,7 @@ splitter = RecursiveJsonSplitter(max_chunk_size=300)
 
 
 # Recursively split json data - If you need to access/manipulate the smaller json chunks
-json_chunks = splitter.split_json(json_data=json_data)
+json_chunks = splitter.split_json(json_data=str(json_data))
 
 for chunk in json_chunks[:3]:
     st.write(chunk)
