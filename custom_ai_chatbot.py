@@ -56,24 +56,64 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 
 
 import openai
-import tiktoken
+import numpy as np
 
-# Combine relevant columns into a single text format
+# Combine columns into a single text field
 df["content"] = df.apply(lambda row: " ".join(map(str, row)), axis=1)
 
-# Generate embeddings
-def get_embedding(text):
-    response = openai.Embedding.create(
-        model="text-embedding-ada-002",
-        input=text
-    )
-    return response["data"][0]["embedding"]
 
-# Apply embedding function
-df["embedding"] = df["content"].apply(get_embedding)
 
-# Convert to dictionary format
-data_records = df[["content", "embedding"]].to_dict(orient="records")
+
+
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
+from langchain.docstore.document import Document
+
+
+# Initialize OpenAI embedding model
+embedding_model = OpenAIEmbeddings(model="text-embedding-ada-002")
+
+# Convert DataFrame into LangChain Documents
+documents = [Document(page_content=text) for text in df["content"].tolist()]
+
+# Create FAISS vector store
+vectorstore = FAISS.from_documents(documents, embedding_model)
+
+# Save FAISS index
+vectorstore.save_local("faiss_index")
+
+
+from langchain.chat_models import ChatOpenAI
+from langchain.chains import RetrievalQA
+
+# Initialize OpenAI Chat model
+chat_model = ChatOpenAI(model_name="gpt-4o", temperature=0)
+
+# Create Retrieval-QA Chain
+qa_chain = RetrievalQA.from_chain_type(
+    llm=chat_model,
+    chain_type="stuff",
+    retriever=vectorstore.as_retriever()
+)
+
+# Function to generate response
+def generate_response(query):
+    return qa_chain.run(query)
+
+# Example Usage
+# query = "What is the average monthly sales?"
+
+# print("AI Response:", answer)
+
+
+
+
+
+
+
+
+
+
 
 
 # agent = create_pandas_dataframe_agent(
@@ -87,6 +127,9 @@ query=st.text_input("Your Query Here")
 
 
 if st.button("submit"):
+    answer = generate_response(query)
+    st.write(answer)
+
 
     # st.write(agent.invoke({"input": query}))
 
