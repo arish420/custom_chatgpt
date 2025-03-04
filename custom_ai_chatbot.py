@@ -120,7 +120,7 @@ agent = create_pandas_dataframe_agent(
     llm, df, agent_type="openai-tools", verbose=True, allow_dangerous_code=True
 )
 
-# st.header("Welcome to Custom AI ChatBot")
+st.header("Welcome to Custom AI ChatBot")
 
 query=st.text_input("Your Query Here")
 
